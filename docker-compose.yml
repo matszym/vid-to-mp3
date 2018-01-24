@@ -1,0 +1,20 @@
+version: '3'
+services:
+  web:
+    build: .
+    volumes:
+    - ./dist:/usr/share/nginx/html
+    - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+    - "8080:80"
+    depends_on:
+    - node
+  node:
+    build:
+      context: .
+      dockerfile: dockerfile.node
+    volumes:
+    - ./:/usr/src/app
+    ports:
+      - "3000:3000"
+    command: npm start
